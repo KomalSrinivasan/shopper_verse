@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Data</title>
+    <!-- Google Font - Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+            background-color: #edf2f7; /* Fresh Green Background */
+        }
+
+        .container {
+            max-width: 80%; /* 80% width on larger screens */
+            margin: 0 auto; /* Center the container */
+            padding: 20px;
+        }
+
+        .form-input {
+            width: calc(100% - 20px);
+            margin: 5px 10px;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 0.375rem;
+            border: 1px solid #e2e8f0; /* Border color */
+            transition: border-color 0.2s ease-in-out;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4299e1; /* Expansive Blue Border color on focus */
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #4a5568; /* Gray color for labels */
+            margin-left: 10px;
+        }
+
+        .form-text {
+            font-size: 0.875rem;
+            color: #4a5568; /* Gray color for text */
+        }
+
+        .form-submit {
+            width: calc(100% - 20px);
+            margin: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            background-color: #f56565; /* Energetic Orange Background */
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            box-sizing: border-box;
+        }
+
+        .form-submit:hover {
+            background-color: #e53e3e; /* Darker shade of Energetic Orange on hover */
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .form-group {
+            flex-basis: calc(33.33% - 20px);
+            margin: 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .form-group {
+                flex-basis: calc(50% - 20px);
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .form-group {
+                flex-basis: calc(100% - 20px);
+            }
+        }
+
+        /* Loader styles */
+        .loader {
+            border: 5px solid #f3f3f3; /* Light gray border */
+            border-top: 5px solid #3498db; /* Blue border for loader */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* Close button styles */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-2xl mb-8 font-semibold text-center text-gray-800">Customer Data Form</h1>
+        <form id="customerForm">
+            <div class="grid">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name*</label>
+                    <input type="text" class="form-input rounded-md shadow-sm" id="name" name="Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="form-label">Mobile Number*</label>
+                    <input type="tel" class="form-input rounded-md shadow-sm" id="mobile" name="Mobile" pattern="[0-9]{10}" required>
+                </div>
+                <div class="form-group">
+                    <label for="age" class="form-label">Age*</label>
+                    <input type="number" class="form-input rounded-md shadow-sm" id="age" name="Age" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender" class="form-label">Gender*</label>
+                    <select class="form-input rounded-md shadow-sm" id="gender" name="Gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="item" class="form-label">Item Purchased*</label>
+                    <select class="form-input rounded-md shadow-sm" id="item" name="Item" required>
+                        <option value="">Select item</option>
+                        <option value="Rare Rabbit">Rare Rabbit</option>
+                        <option value="Armani Exchange">Armani Exchange</option>
+                        <option value="Superdry">Superdry</option>
+                        <option value="RL">RL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="interestedBrands" class="form-label">Interested Brands</label>
+                    <input type="text" class="form-input rounded-md shadow-sm" id="interestedBrands" name="Interested Brands">
+                </div>
+                <div class="form-group">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-input rounded-md shadow-sm" id="address" name="Address" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="pincode" class="form-label">Pincode*</label>
+                    <input type="text" class="form-input rounded-md shadow-sm" id="pincode" name="Pincode" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedback" class="form-label">Feedback</label>
+                    <textarea class="form-input rounded-md shadow-sm" id="feedback" name="Feedback" rows="3"></textarea>
+                </div>
+            </div>
+            <button type="button" onclick="submitForm()" class="form-submit mt-6">
+                Submit
+            </button>
+            <!-- Loader -->
+            <div class="loader" id="loader" style="display:none;"></div>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Form submitted successfully!</p>
+        </div>
+    </div>
+
+    <script>
+        function submitForm() {
+            var form = document.getElementById('customerForm');
+            var pincodeInput = document.getElementById('pincode');
+            var pincodeValue = pincodeInput.value.trim();
+
+            // Validate pincode
+            if (!/^\d{6}$/.test(pincodeValue)) {
+                alert('Please enter a valid 6-digit pincode.');
+                pincodeInput.focus();
+                return false;
+            }
+
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+
+            // Show loader
+            document.getElementById('loader').style.display = 'block';
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Hide loader
+                        document.getElementById('loader').style.display = 'none';
+                        // Show modal
+                        var modal = document.getElementById('myModal');
+                        modal.style.display = 'block';
+                        // Reset the form
+                        form.reset();
+                    } else {
+                        // Error message
+                        alert('Error submitting form. Please try again later.');
+                    }
+                }
+            };
+
+            xhr.open('POST', 'https://script.google.com/macros/s/AKfycbzVd2RN6-Bh6GjkzWZprcPQvugeKO0NksdLmEX9Wg2uqzUU6q2aYUkoUtQeAwylefse/exec');
+            xhr.send(formData);
+
+            return false; // Prevent form from submitting via default action
+        }
+
+        // Close the modal when the user clicks on <span> (x)
+        document.getElementsByClassName('close')[0].onclick = function() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
+
+        // Close the modal when the user clicks anywhere outside of the modal
+        window.onclick = function(event) {
+            var modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
